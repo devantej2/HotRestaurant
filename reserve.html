@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Reservation - GS</title>
+
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="jumbotron text-center">
+            <h1><span class="fa fa-fire"></span> Hot Restaurant</h1>
+            <hr>
+            <h3>Make your reservation</h3>
+            <br>
+            <a href="/tables.html"><button class="btn btn-primary btn-lg"><span class="fa fa-eye"></span> View Tables</button></a>
+            <button type="button" class="btn btn-default btn-sm">
+                    <i class="material-icons">home</i>
+                  </button>
+            </a>
+        </div>
+        <div class="row">
+
+            <div class="col-12">
+
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Table Reservation</h5>
+                    </div>
+                    <div class="card-body">
+                        <form method="POST" role="form">
+
+                            <div class="form-group">
+                                <label for="name">Name</label>
+                                <input type="text" class="form-control" id="name">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="phone">Phone Number</label>
+                                <input type="text" class="form-control" id="phone">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" class="form-control" id="email">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="unique-id">Unique ID</label>
+                                <input type="text" class="form-control" id="unique-id">
+                            </div>
+
+                        </form>
+                        <br>
+                        <div class="text-left">
+                            <button type="submit" class="btn btn-primary btn-md" id="add-btn"></span>Submit</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="container w-75">
+        <a class="api-table-link" href="localhost:3000/api/reservations">API Table Link</a><span> | </span><a class="api-wait-list" href="localhost:3000/api/waitlist">API Wait List</a>
+    </div>
+
+    <script type="text/javascript">
+        $("#add-btn").on("click", function(event) {
+            event.preventDefault();
+            var newReservation = {
+                name: $("#name").val().trim(),
+                phone: $("#phone").val().trim(),
+                email: $("#email").val().trim(),
+                id: $("#unique-id").val().trim()
+            };
+
+            $.post("/api/reserve", newReservation)
+                .then(function(data) {
+                    console.log("reserve.html", data);
+                    alert("Adding reservation...");
+                });
+        });
+
+        app.get("/api/reservations", function(req, res) {
+            return res.json(reservations);
+        });
+
+        app.get("/api/waitlist", function(req, res) {
+            return res.json(waitlist);
+        });
+    </script>
+
+</body>
+
+</html>
